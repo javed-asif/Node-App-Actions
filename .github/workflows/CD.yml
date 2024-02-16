@@ -1,0 +1,15 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: actions/checkout@v2
+      - run: docker build . -t javedasif/udemy
+      - run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | dicker login -u ${{secrets.DOCKERHUB_USERNMAE}} --password-stdin
+      - run: docker push javedasif/udemy
